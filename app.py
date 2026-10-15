@@ -9,9 +9,9 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from rivet.controller import TRIGGER, investigate
-from rivet.sensors import FIELDS, flag_unusual, load_sensor_csv, make_simulated_csv
-from rivet.video import MAX_MB, analyse, frame_diff, make_baseline, pixel_threshold, read_frames
+from controller import TRIGGER, investigate
+from sensors import FIELDS, flag_unusual, load_sensor_csv, make_simulated_csv
+from video import MAX_MB, analyse, frame_diff, make_baseline, pixel_threshold, read_frames
 
 SIM_LABEL = "SIMULATED DATA — NOT LIVE SENSOR MEASUREMENTS"
 LIMITATIONS = [

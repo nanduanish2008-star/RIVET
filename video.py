@@ -24,10 +24,20 @@ def read_frames(path, every_n=15, max_frames=120, width=640):
             h, w = bgr.shape[:2]
             if w > width:
                 bgr = cv2.resize(bgr, (width, int(h * width / w)))
-            frames.append({"t": round(idx / fps, 2), "frame_index": idx,
-                           "bgr": bgr, "gray": cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)})
-        idx += 1
-    cap.release()
+            
+def make_baseline(frames, n=5):
+    """Build a baseline from early frames without averaging two-frame changes."""
+    if not frames:
+        raise ValueError("At least one frame is required to build a baseline.")
+
+    if len(frames) < n:
+        baseline = frames[0]["gray"]
+    else:
+        stack = np.stack([f["gray"] for f in frames[:n]])
+        baseline = np.median(stack, axis=0).astype(np.uint8)
+
+    return cv2.GaussianBlur(baseline, (5, 5), 0)
+
     if not frames:
         raise ValueError("No readable frames were found. The video may be corrupt.")
     return frames, idx

@@ -56,12 +56,12 @@ def make_baseline(frames, n=5):
     if not frames:
         raise ValueError("At least one frame is required to build a baseline.")
 
-    if len(frames) <= n:
-        baseline = frames[0]["gray"]
-    else:
-        stack = np.stack([f["gray"] for f in frames[:n]])
-        baseline = np.median(stack, axis=0).astype(np.uint8)
-
+    
+if len(frames) < n:
+    baseline = frames[0]["gray"]
+else:
+    stack = np.stack([f["gray"] for f in frames[:n]])
+    baseline = np.median(stack, axis=0).astype(np.uint8)
     return cv2.GaussianBlur(baseline, (5, 5), 0)
 
 

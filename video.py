@@ -64,12 +64,6 @@ def make_baseline(frames, n=5):
 
     return cv2.GaussianBlur(baseline, (5, 5), 0)
     
-if len(frames) < n:
-    baseline = frames[0]["gray"]
-else:
-    stack = np.stack([f["gray"] for f in frames[:n]])
-    baseline = np.median(stack, axis=0).astype(np.uint8)
-    return cv2.GaussianBlur(baseline, (5, 5), 0)
 
 
 def frame_diff(gray, base, thresh):
